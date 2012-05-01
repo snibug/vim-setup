@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/Users/sunghosong/Test/python/pycassa/pycassa/tests'
+let g:netrw_dirhist_2='/Users/sunghosong/Test/python/pycassa/pycassa/pycassa'
+let g:netrw_dirhist_3='/Users/sunghosong/Lecture/AI/Language_Process/03'
+let g:netrw_dirhist_4='/Users/sunghosong/Test/python/tornado/tornado-2.2/tornado'
+let g:netrw_dirhist_5='/Users/sunghosong/Workspace/IOS/iOS-5-Cookbook/.git'
