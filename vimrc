@@ -180,7 +180,7 @@ au! Syntax thrift source ~/.vim/syntax/actionscript.vim
 "set output-meta on
 
 "tags
-set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
+set tags=./tags;/
 
 " Vundle
 set rtp+=~/.vim/bundle/vundle
@@ -188,3 +188,6 @@ call vundle#begin()
 
 Bundle 'gmarik/vundle'
 Bundle 'davidhalter/jedi-vim'
+
+" gyp bundle
+Bundle 'kelan/gyp.vim'
