@@ -2,6 +2,10 @@ source plugin/jedi.vim
 source test/utils.vim
 
 describe 'pyimport'
+    before
+        let g:jedi#use_tabs_not_buffers = 1
+    end
+
     after
         bd!
         bd!
@@ -9,9 +13,9 @@ describe 'pyimport'
 
     it 'open_tab'
         Pyimport os 
-        Expect g:current_buffer_is_module('os') == 1
+        Expect CurrentBufferIsModule('os') == 1
         Pyimport subprocess 
-        Expect g:current_buffer_is_module('subprocess') == 1
+        Expect CurrentBufferIsModule('subprocess') == 1
         " the empty tab is sometimes also a tab
         Expect tabpagenr('$') >= 2
     end
@@ -19,7 +23,7 @@ describe 'pyimport'
     it 'completion'
         " don't know how to test this directly
         "execute "Pyimport subproc\<Tab>"
-        "Expect g:current_buffer_is_module('subprocess') == 1
+        "Expect CurrentBufferIsModule('subprocess') == 1
 
         Expect jedi#py_import_completions('subproc', 0, 0) == 'subprocess'
         Expect jedi#py_import_completions('subprocess', 0, 0) == 'subprocess'
