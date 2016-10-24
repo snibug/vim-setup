@@ -1,0 +1,4 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/Users/snibug/Workspace/local/icpc/algorithm/kmp'
+let g:netrw_dirhist_2='/Users/snibug/Workspace/local/icpc/dovelet.com/27/period'
