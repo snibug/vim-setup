@@ -46,7 +46,7 @@ set cindent
 set pastetoggle=<F8>
 
 " 포커스를 잃으면 자동 세이브
-"au FocusLost * :wa
+au FocusLost * :wa
 " 필요없는 공백을 하이라이트
 "set list
 "
@@ -200,3 +200,17 @@ Bundle "wookiehangover/jshint.vim"
 
 " gyp bundle
 Bundle 'kelan/gyp.vim'
+
+" syntastic recommanded setting
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" syntastic cpp options
+let g:syntastic_cpp_cpplint_exec = 'cpplint'
+let g:syntastic_cpp_config_file = '.syntastic'
