@@ -51,6 +51,7 @@ set pastetoggle=<F8>
 "set list
 "
 set listchars=tab:»·,trail:·,extends:#,nbsp:·
+
 " 파일 인코딩은 언제나 utf-8. 안되면 cp949 시도
 set encoding=utf8
 set fileencodings=utf8
@@ -63,7 +64,7 @@ set cursorline " 커서 위치 보여주세요
 set ttyfast " 느리지 않아요 로컬이에요
 set ruler " 커서 위치 보여주세요
 set backspace=indent,eol,start " 백스페이스 설정
-set mouse=an " 마우스 지원
+set mouse=r " 마우스 지원
 set autochdir " 파일 열면 해당 디렉토리로 chdir. cmd-t 랑 잘 안맞는당
 set showmode " 현재 상태 (insert/visualize) 표시.. 이거 디폴트로 안켜있나?
 set showcmd " 현재 명령어 (ex 모드) 표시
@@ -77,6 +78,12 @@ set undolevels=1000 " 이것도 많이 기억하도록
 
 " 난 , 리더키로 쓰는거 정말 싫음. 나만 그런가. -_-;
 let mapleader = "\\"
+
+" 마지막 편집 위치 복원 기능
+au BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\   exe "norm g`\"" |
+\ endif
 
 " 폴드
 " ====
@@ -188,6 +195,8 @@ call vundle#begin()
 
 Bundle 'gmarik/vundle'
 Bundle 'davidhalter/jedi-vim'
+Bundle "wookiehangover/jshint.vim"
+
 
 " gyp bundle
 Bundle 'kelan/gyp.vim'

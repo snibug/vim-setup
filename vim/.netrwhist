@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/Users/lineplus/Workspace/chromium/net/tools/quic'
-let g:netrw_dirhist_2='/Users/lineplus/Workspace/chromium/net/tools'
-let g:netrw_dirhist_3='/Users/lineplus/Workspace/chromium/net/tools/quic'
-let g:netrw_dirhist_4='/Users/lineplus/Downloads/quicksilver-season1-cent.git/src/net/quic'
-let g:netrw_dirhist_5='/Applications/League of Legends.app/Contents/LoL/RADS/projects/lol_air_client_config_na/releases/0.0.0.53/deploy'
-let g:netrw_dirhist_6='/Applications/League of Legends.app/Contents/LoL/RADS/projects/lol_air_client_config_na/releases/0.0.0.53'
