@@ -212,5 +212,11 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " syntastic cpp options
-let g:syntastic_cpp_cpplint_exec = 'cpplint'
+"let g:syntastic_cpp_cpplint_exec = 'cpplint'
 let g:syntastic_cpp_config_file = '.syntastic'
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_no_default_include_dirs = 1
+
+" syntastic python options
+let g:syntastic_python_checkers = ['pylint']
