@@ -1,7 +1,3 @@
-syntax on
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
 " Setting up Vundle - the vim plugin bundler
 let iCanHazVundle=1
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
@@ -48,17 +44,13 @@ if iCanHazVundle == 0
   :PluginInstall
 endif
 
-call vundle#end() 
-"must be last
-filetype plugin indent on " load filetype plugins/indent settings
+call vundle#end()
+
+" setting start
+syntax on
+filetype off                  " required
+set nocompatible
 colorscheme busybee
-syntax on                      " enable syntax
-
-" Setting up Vundle - the vim plugin bundler end
-
-set nocompatible 
-
-filetype plugin indent on
 
 " tabs
 set tabstop=2
@@ -66,13 +58,14 @@ set shiftwidth=2
 set expandtab
 
 " search settings
-set ignorecase 
+set ignorecase
 set smartcase " do not ignore case when query is mixed case
 set incsearch
 set showmatch
 set hlsearch " highlight search
 map N Nzz " move search result to mid screen
 map n nzz
+map r :redraw!<CR>
 
 " tab navigation
 set showtabline=2 " always show tab line
@@ -82,7 +75,7 @@ map <S-tab> :tabprevious<CR>
 map <C-w> :tabclose<CR>
 " line wraps
 set wrap
-set textwidth=0 
+set textwidth=0
 " autoindent
 set autoindent
 set pastetoggle=<F8>
@@ -95,21 +88,21 @@ set laststatus=2 " always show status line
 set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ %{fugitive#statusline()}\ [%l,%v][%p%%]
 set scrolljump=1 " 1 line scrolls
 set scrolloff=3 " start scrolling with 3 lines remaining on screen
-set visualbell 
+set visualbell
 set cursorline " show cursor line
-set ttyfast " 
+set ttyfast "
 set ruler " show cursor location
 set backspace=indent,eol,start " fix backspace
 set mouse=r " use mouse
-set showmode " 
-set showcmd " 
-set hidden " 
+set showmode "
+set showcmd "
+set hidden "
 set wildmenu " autocomplete
 set wildmode=list:longest,full
-set whichwrap=b,s,h,l,<,>,[,] " 
+set whichwrap=b,s,h,l,<,>,[,] "
 set lazyredraw " do not redraw while running macros
-set history=1000 " 
-set undolevels=1000 " 
+set history=1000 "
+set undolevels=1000 "
 
 let mapleader = "\\"
 
@@ -152,9 +145,9 @@ nnoremap <leader>sv :so $MYVIMRC<CR>
 nnoremap <leader>v V`]
 " vertical split
 nnoremap <leader>w <C-w>v<C-w>l
-" horizontal split 
+" horizontal split
 nnoremap <leader>e <C-w>s<C-w>j
-" close split 
+" close split
 nnoremap <leader>q <C-w>q
 " move between splits
 nnoremap <C-h> <C-w>h
@@ -183,7 +176,7 @@ let g:ctrlp_working_path_mode = 0
 
 " Ack
 let g:ackprg="ack-grep -H --nocolor --nogroup --column --nojs"
-nnoremap <leader>a :Ack 
+nnoremap <leader>a :Ack
 nnoremap <leader>A :Ack <C-R><C-W><CR>
 
 " Yankring
@@ -269,12 +262,12 @@ function! HighrightTabs()
   syntax match TAB /\t/
   hi TAB ctermbg=red ctermfg=red
 endfunction
-  
+
 function! CancelHighrightTabs()
   syntax match TAB /\t/
   hi TAB ctermbg=234 ctermfg=234
 endfunction
-  
+
 au BufEnter,BufRead * call HighrightTabs()
 au BufEnter,BufRead *.go call CancelHighrightTabs()
 
@@ -288,3 +281,6 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:tern_map_keys=1
 " show argument hints
 let g:tern_show_argument_hints='on_hold'
+
+"must be last
+filetype plugin indent on " load filetype plugins/indent settings
