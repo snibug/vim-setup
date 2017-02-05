@@ -38,7 +38,8 @@ Plugin 'wookiehangover/jshint.vim' "jshint
 Plugin 'airblade/vim-gitgutter'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'scrooloose/nerdtree'
-
+Plugin 'Valloric/YouCompleteMe' 
+Plugin 'marijnh/tern_for_vim'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -263,3 +264,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
+" tern_form_vim
+" enable keyboard shortcut
+let g:tern_map_keys=1
+" show argument hints
+let g:tern_show_argument_hints='on_hold'
