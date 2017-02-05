@@ -1,11 +1,11 @@
-syntax on 
+syntax on
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " Setting up Vundle - the vim plugin bundler
 let iCanHazVundle=1
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-if !filereadable(vundle_readme) 
+if !filereadable(vundle_readme)
   echo "Installing Vundle.."
   echo ""
   silent !mkdir -p ~/.vim/bundle
@@ -18,27 +18,28 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 "Add your bundles here
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
 Plugin 'davidhalter/jedi-vim' " jedi
 Plugin 'elzr/vim-json'
 Plugin 'fatih/vim-go'
+Plugin 'flazz/vim-colorschemes'
 Plugin 'godlygeek/tabular'
 Plugin 'https://github.com/tpope/vim-fugitive'
 Plugin 'https://github.com/vim-syntastic/syntastic.git'
+Plugin 'marijnh/tern_for_vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tomlion/vim-solidity'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'wookiehangover/jshint.vim' "jshint
-Plugin 'airblade/vim-gitgutter'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Valloric/YouCompleteMe' 
-Plugin 'marijnh/tern_for_vim'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -239,6 +240,29 @@ nnoremap <C-q> :qa<CR>
 
 let g:gitgutter_enabled = 0
 nnoremap <leader>gg :GitGutterToggle<CR>
+
+" highlite a trailing space 
+highlight ExtraWhitespace ctermbg=yellow guibg=yellow
+
+augroup WhitespaceMatch
+  " Remove ALL autocommands for the WhitespaceMatch group.
+  autocmd!
+  autocmd BufWinEnter * let w:whitespace_match_number =
+        \ matchadd('ExtraWhitespace', '\s\+$')
+  autocmd InsertEnter * call s:ToggleWhitespaceMatch('i')
+  autocmd InsertLeave * call s:ToggleWhitespaceMatch('n')
+augroup END
+
+function! s:ToggleWhitespaceMatch(mode)
+  let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
+  if exists('w:whitespace_match_number')
+    call matchdelete(w:whitespace_match_number)
+    call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
+  else
+    " Something went wrong, try to be graceful.
+    let w:whitespace_match_number =  matchadd('ExtraWhitespace', pattern)
+  endif
+endfunction
 
 " highright tab space
 function! HighrightTabs()
