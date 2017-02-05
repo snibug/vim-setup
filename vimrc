@@ -1,222 +1,265 @@
-syntax on
+syntax on 
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-" vi 호환성 버리기
-set nocompatible
-" pathogen 을 이용해 다른 플러그인들을 로드한다
+" Setting up Vundle - the vim plugin bundler
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme) 
+  echo "Installing Vundle.."
+  echo ""
+  silent !mkdir -p ~/.vim/bundle
+  silent !git clone https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/vundle
+  let iCanHazVundle=0
+endif
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+
+"Add your bundles here
+Plugin 'Syntastic' "uber awesome syntax and errors highlighter
+Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
+Plugin 'davidhalter/jedi-vim' " jedi
+Plugin 'elzr/vim-json'
+Plugin 'fatih/vim-go'
+Plugin 'godlygeek/tabular'
+Plugin 'https://github.com/tpope/vim-fugitive'
+Plugin 'https://github.com/vim-syntastic/syntastic.git'
+Plugin 'mileszs/ack.vim'
+Plugin 'mxw/vim-jsx'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'pangloss/vim-javascript'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'wookiehangover/jshint.vim' "jshint
+Plugin 'airblade/vim-gitgutter'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'scrooloose/nerdtree'
+
+
+"...All your other bundles...
+if iCanHazVundle == 0
+  echo "Installing Vundles, please ignore key map error messages"
+  echo ""
+  :PluginInstall
+endif
+
+call vundle#end() 
+"must be last
+filetype plugin indent on " load filetype plugins/indent settings
+colorscheme busybee
+syntax on                      " enable syntax
+
+" Setting up Vundle - the vim plugin bundler end
+
+set nocompatible 
+
+" load plugins via Pathogen
 filetype off
 call pathogen#helptags()
-
-"call pathogen#runtime_append_all_bundles()
+call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 
-" 탭 세팅
-"set softtabstop=2
+" tabs
+set tabstop=2
+set shiftwidth=2
+set expandtab
 
-" set color scheme
-colorscheme busybee
-
-
-" 검색 설정
-set ignorecase " 대소문자 무시하지만..
-set smartcase " 검색어에 대소문자 섞여 있는 경우엔 존중해드림
+" search settings
+set ignorecase 
+set smartcase " do not ignore case when query is mixed case
 set incsearch
 set showmatch
-set hlsearch " 검색 결과를 하이라이트한다.
-map N Nzz " 검색 결과를 화면 가운데로!
+set hlsearch " highlight search
+map N Nzz " move search result to mid screen
 map n nzz
 
-" 탭 내비게이션
-set showtabline=2 " 탭 언제나 보여주기
+" tab navigation
+set showtabline=2 " always show tab line
 map <C-t> :tabnew<CR>
 map <tab> :tabnext<CR>
 map <S-tab> :tabprevious<CR>
 map <C-w> :tabclose<CR>
-map <C-a> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <C-n> :tnext<CR>
-map <C-p> :tprevious<CR>
-
-" 라인 랩 관련 설정
-"set wrap
-"set textwidth=0 " 니맘대로 줄바꿈하지마 ㄱㅅㄲ야
-
-" 인덴트.
+" line wraps
+set wrap
+set textwidth=0 
+" autoindent
 set autoindent
-set smartindent
-set cindent
 set pastetoggle=<F8>
-
-" 포커스를 잃으면 자동 세이브
+" save when focus is lost
 au FocusLost * :wa
-" 필요없는 공백을 하이라이트
-"set list
-"
-set listchars=tab:»·,trail:·,extends:#,nbsp:·
-
-" 파일 인코딩은 언제나 utf-8. 안되면 cp949 시도
 set encoding=utf8
 set fileencodings=utf8
-set laststatus=2 " 상태라인 항상 보여주세요
-set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ [%l,%v][%p%%]
-set scrolljump=1 " 스크롤은 1줄씩만
-set scrolloff=3 " 3줄 남기고 스크롤 설정
-set visualbell " 비주얼 벨 써야지여
-set cursorline " 커서 위치 보여주세요
-set ttyfast " 느리지 않아요 로컬이에요
-set ruler " 커서 위치 보여주세요
-set backspace=indent,eol,start " 백스페이스 설정
-set mouse=r " 마우스 지원
-set autochdir " 파일 열면 해당 디렉토리로 chdir. cmd-t 랑 잘 안맞는당
-set showmode " 현재 상태 (insert/visualize) 표시.. 이거 디폴트로 안켜있나?
-set showcmd " 현재 명령어 (ex 모드) 표시
-set hidden " 버퍼가 안보이게 되면 변경 내용 버리기.
-set wildmenu " 자동완성시 리스트를 보여준다
-set wildmode=list:longest,full
-"set whichwrap=b,s,h,l,<,>,[,] " 줄 끝에서 다음 줄로 넘어가기 위해 사용할 수 있는 키들
-set lazyredraw " 매크로 수행중 다시 그리기 없기
-set history=1000 " 기억 많이 하면 좋지
-set undolevels=1000 " 이것도 많이 기억하도록
 
-" 난 , 리더키로 쓰는거 정말 싫음. 나만 그런가. -_-;
+set laststatus=2 " always show status line
+set statusline=%F%m%r%h%w\ (%{&ff}){%Y}\ %{fugitive#statusline()}\ [%l,%v][%p%%]
+set scrolljump=1 " 1 line scrolls
+set scrolloff=3 " start scrolling with 3 lines remaining on screen
+set visualbell 
+set cursorline " show cursor line
+set ttyfast " 
+set ruler " show cursor location
+set backspace=indent,eol,start " fix backspace
+set mouse=r " use mouse
+set showmode " 
+set showcmd " 
+set hidden " 
+set wildmenu " autocomplete
+set wildmode=list:longest,full
+set whichwrap=b,s,h,l,<,>,[,] " 
+set lazyredraw " do not redraw while running macros
+set history=1000 " 
+set undolevels=1000 " 
+
 let mapleader = "\\"
 
-" 마지막 편집 위치 복원 기능
-au BufReadPost *
-\ if line("'\"") > 0 && line("'\"") <= line("$") |
-\   exe "norm g`\"" |
-\ endif
+set foldmethod=syntax
+set foldlevel=999 " do not fold at first
 
-" 폴드
-" ====
-"set foldmethod=syntax " 문법 기반 폴딩
-"set foldlevel=999 " 처음엔 폴드하지마요
+" keyboard maps
+" ===========
 
-" 탭으로 matching brackets 사이를 오가기
-"vnoremap <tab> %
 nnoremap j gj
 nnoremap k gk
-" : 대신 ; 를 치자
+" type ; instead of :
 nnoremap ; :
-" 줄끝까지 복사
+" copy to EOL
 nnoremap Y y$
-" visual mode 내에서 시프트해도 나가지 않기 (!)
+" shift in visual mode
 vnoremap < <gv
 vnoremap > >gv
-" F2 로 라인 넘버 토글
-nnoremap <F2> :set relativenumber!<CR>
+" copy and paste to/from system clipboard!
+vmap <C-c> y: call system("xclip -i -selection clipboard", getreg("\""))<CR>
+nmap <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>
+imap <C-v> <Esc><C-v>a
 
 " autocmds
 " ========
-" trailing space를 highlight해준다.
-highlight ExtraWhitespace ctermbg=yellow guibg=yellow
+autocmd FileType c,cpp,js set expandtab
 
-augroup WhitespaceMatch
-  " Remove ALL autocommands for the WhitespaceMatch group.
-  autocmd!
-  autocmd BufWinEnter * let w:whitespace_match_number =
-        \ matchadd('ExtraWhitespace', '\s\+$')
-  autocmd InsertEnter * call s:ToggleWhitespaceMatch('i')
-  autocmd InsertLeave * call s:ToggleWhitespaceMatch('n')
-augroup END
+" leader commands
+" =============
 
-function! s:ToggleWhitespaceMatch(mode)
-  let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
-  if exists('w:whitespace_match_number')
-    call matchdelete(w:whitespace_match_number)
-    call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
+" reindent whole file
+nmap <silent> <leader><tab> mzgg=G`z
+" get rid of search highlights
+nmap <silent> <leader><space> :nohlsearch<cr>
+" get rid of trailing spaces
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+" source this vimrc
+nnoremap <leader>sv :so $MYVIMRC<CR>
+" select last pasted
+nnoremap <leader>v V`]
+" vertical split
+nnoremap <leader>w <C-w>v<C-w>l
+" horizontal split 
+nnoremap <leader>e <C-w>s<C-w>j
+" close split 
+nnoremap <leader>q <C-w>q
+" move between splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-l> <C-w>l
+nnoremap <leader>= <C-w>=
+
+" open in current directory..
+map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
+map ,t :tabe <C-R>=expand("%:p:h") . "/" <CR>
+map ,s :split <C-R>=expand("%:p:h") . "/" <CR>
+
+" mustang ftw!
+color mustang
+
+" plugin commands
+" =================
+
+" CtrlP
+set wildignore=*.pyc,*.o,*.out,*.png
+nnoremap <leader>t :CtrlP<CR>
+let g:ctrlp_map = '<leader>t'
+let g:ctrlp_working_path_mode = 0
+
+" Ack
+let g:ackprg="ack-grep -H --nocolor --nogroup --column --nojs"
+nnoremap <leader>a :Ack 
+nnoremap <leader>A :Ack <C-R><C-W><CR>
+
+" Yankring
+nnoremap <silent> <F3> :YRShow<cr>
+inoremap <silent> <F3> <ESC>:YRShow<cr>
+let g:yankring_history_dir='~/.vim'
+
+" bufexplorer
+map <leader>o :BufExplorer<CR>
+
+" NERDTree
+let NERDTreeChDirMode=0
+let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc$', '\.out$', '\.swp$']
+let NERDTreeShowBookmarks=1
+let NERDTreeQuitOnOpen=1
+map <C-e> :NERDTreeFind<CR>
+map <C-c> :NERDTreeClose<CR>
+
+" Fugitive
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gl :Glog<CR>
+nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gp :Gpush<CR>
+
+nnoremap <F2> :call ToggleMouse()<CR>
+nnoremap <F3> :set wrap!<CR>
+function! ToggleMouse()
+  if &mouse == 'a'
+	set nonu
+    set mouse=
+    echo "Mouse usage disabled"
   else
-    " Something went wrong, try to be graceful.
-    let w:whitespace_match_number =  matchadd('ExtraWhitespace', pattern)
+	set nu
+    set mouse=a
+    echo "Mouse usage enabled"
   endif
 endfunction
+
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+
+silent !stty -ixon > /dev/null 2> /dev/null
+nnoremap <C-q> :qa<CR>
+
+let g:gitgutter_enabled = 0
+nnoremap <leader>gg :GitGutterToggle<CR>
 
 " highright tab space
 function! HighrightTabs()
   syntax match TAB /\t/
   hi TAB ctermbg=red ctermfg=red
 endfunction
-
+  
 function! CancelHighrightTabs()
   syntax match TAB /\t/
   hi TAB ctermbg=234 ctermfg=234
 endfunction
-
+  
 au BufEnter,BufRead * call HighrightTabs()
 au BufEnter,BufRead *.go call CancelHighrightTabs()
 
-" 플러그인 커맨드들
-" =================
+" airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
-" Command-T: 다음 파일들은 무시해주세요
-set wildignore=*.o,*.out,*.png
-
-" Ack
-"let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-"nnoremap <leader>a :Ack
-
-" Yankring
-"nnoremap <silent> <F3> :YRShow<cr>
-"inoremap <silent> <F3> <ESC>:YRShow<cr>
-"let g:yankring_history_dir='~/.vim'
-
-" 키보드 매핑
-" ===========
-set tabstop=2
-set shiftwidth=2
-set expandtab
-
-"highlight RedundantWhitespace ctermbg=yellow guibg=yellow
-"match RedundantWhitespace /\s\+\%#\@<!$/| \+\ze\t/
-"match RedundantWhitespace /\s\+\%#\@<!$/
-
-" pathogen
-execute pathogen#infect()
-
-" thrift
-au BufRead,BufNewFile *.thrift set filetype=thrift
-au! Syntax thrift source ~/.vim/syntax/thrift.vim
-
-" action script
-au Bufread,BufNewFile *.as set filetype=actionscript
-au! Syntax thrift source ~/.vim/syntax/actionscript.vim
-
-" go
-"au BufEnter,BufRead *.go call HighrightTabs()
-
-"set convert-meta off
-"set meta-flag on
-"set output-meta on
-
-"tags
-set tags=./tags;/
-
-" Vundle
-set rtp+=~/.vim/bundle/vundle
-call vundle#begin()
-
-Bundle 'gmarik/vundle'
-Bundle 'davidhalter/jedi-vim'
-Bundle "wookiehangover/jshint.vim"
-
-
-" gyp bundle
-Bundle 'kelan/gyp.vim'
-
-" syntastic recommanded setting
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" syntastic cpp options
-"let g:syntastic_cpp_cpplint_exec = 'cpplint'
-let g:syntastic_cpp_config_file = '.syntastic'
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_no_default_include_dirs = 1
-
-" syntastic python options
-let g:syntastic_python_checkers = ['pylint']
