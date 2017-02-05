@@ -18,7 +18,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 "Add your bundles here
-Plugin 'Syntastic' "uber awesome syntax and errors highlighter
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
 Plugin 'davidhalter/jedi-vim' " jedi
 Plugin 'elzr/vim-json'
@@ -58,10 +57,6 @@ syntax on                      " enable syntax
 
 set nocompatible 
 
-" load plugins via Pathogen
-filetype off
-call pathogen#helptags()
-call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 
 " tabs
