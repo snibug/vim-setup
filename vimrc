@@ -1,3 +1,6 @@
+filetype off                  " required
+set nocompatible
+
 " Setting up Vundle - the vim plugin bundler
 let iCanHazVundle=1
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
@@ -52,9 +55,6 @@ call vundle#end()
 syntax on
 colorscheme busybee
 hi Visual term=reverse ctermbg=8 guibg=LightGrey
-
-filetype off                  " required
-set nocompatible
 
 " tabs
 set tabstop=2
@@ -125,10 +125,6 @@ nnoremap Y y$
 " shift in visual mode
 vnoremap < <gv
 vnoremap > >gv
-" copy and paste to/from system clipboard!
-vmap <C-c> y: call system("xclip -i -selection clipboard", getreg("\""))<CR>
-nmap <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>
-imap <C-v> <Esc><C-v>a
 
 " autocmds
 " ========
@@ -277,38 +273,61 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" YouCompleteMe options
+let g:ycm_always_populate_location_list = 1
+let g:ycm_always_populate_location_list = 1 "default 0
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
+let g:ycm_complete_in_strings = 1 "default 1
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_echo_current_diagnostic = 1
+let g:ycm_enable_diagnostic_highlighting = 1
+let g:ycm_enable_diagnostic_signs = 1
+let g:ycm_error_symbol = '>>'
+let g:ycm_filetype_whitelist = { '*': 1 }
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
+let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
+let g:ycm_key_invoke_completion = '<C-Space>'
+let g:ycm_key_list_previous_completion = ['', '']
+let g:ycm_key_list_select_completion = ['', '']
+let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
+let g:ycm_path_to_python_interpreter = '' "default ''
+let g:ycm_register_as_syntastic_checker = 1 "default 1
+let g:ycm_server_log_level = 'info' "default info
+let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
+let g:ycm_show_diagnostics_ui = 1
+let g:ycm_warning_symbol = '>*'
+set completeopt-=preview
 
-map <C-n> :SyntasticNext<CR>
-map <C-p> :SyntasticPrev<CR>
+highlight YcmErrorSign guibg=#3f0000
+highlight YcmErrorLine guibg=#3f0000
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" syntastic options
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+"map <C-n> :SyntasticNext<CR>
+"map <C-p> :SyntasticPrev<CR>
+
+"let g:syntastic_always_populate_loc_list = 0
+"let g:syntastic_auto_loc_list = 0
+"let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_debug = 0
+"let g:syntastic_aggregate_errors = 0
 
 " javascript
 let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
-let g:syntastic_check_on_open=1
-let g:syntastic_javascript_checkers = ['jshint']
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
 
-" c++
-let g:syntastic_cpp_cpplint_exec = 'cpplint'
-let g:syntastic_cpp_config_file = '.syntastic'
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_no_default_include_dirs = 1
+" c++ options
 
-" syntastic python options
-let g:syntastic_python_checkers = ['pylint']
+" python options
 
-" golang settings
+" golang options
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_fields = 1
@@ -317,7 +336,6 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 let g:go_fmt_autosave = 0
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
