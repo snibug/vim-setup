@@ -23,14 +23,16 @@ Plugin 'fatih/vim-go'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'godlygeek/tabular'
 Plugin 'https://github.com/tpope/vim-fugitive'
-Plugin 'https://github.com/vim-syntastic/syntastic.git'
+Plugin 'jelera/vim-javascript-syntax'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'mxw/vim-jsx'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 Plugin 'tomlion/vim-solidity'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
@@ -48,9 +50,11 @@ call vundle#end()
 
 " setting start
 syntax on
+colorscheme busybee
+hi Visual term=reverse ctermbg=8 guibg=LightGrey
+
 filetype off                  " required
 set nocompatible
-colorscheme busybee
 
 " tabs
 set tabstop=2
@@ -162,9 +166,6 @@ map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
 map ,t :tabe <C-R>=expand("%:p:h") . "/" <CR>
 map ,s :split <C-R>=expand("%:p:h") . "/" <CR>
 
-" mustang ftw!
-color mustang
-
 " plugin commands
 " =================
 
@@ -234,7 +235,7 @@ nnoremap <C-q> :qa<CR>
 let g:gitgutter_enabled = 0
 nnoremap <leader>gg :GitGutterToggle<CR>
 
-" highlite a trailing space 
+" highlite a trailing space
 highlight ExtraWhitespace ctermbg=yellow guibg=yellow
 
 augroup WhitespaceMatch
@@ -276,11 +277,47 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
-" tern_form_vim
-" enable keyboard shortcut
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+map <C-n> :SyntasticNext<CR>
+map <C-p> :SyntasticPrev<CR>
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" javascript
 let g:tern_map_keys=1
-" show argument hints
 let g:tern_show_argument_hints='on_hold'
+let g:syntastic_check_on_open=1
+let g:syntastic_javascript_checkers = ['jshint']
+let g:ycm_add_preview_to_completeopt=0
+let g:ycm_confirm_extra_conf=0
+
+" c++
+let g:syntastic_cpp_cpplint_exec = 'cpplint'
+let g:syntastic_cpp_config_file = '.syntastic'
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_no_default_include_dirs = 1
+
+" syntastic python options
+let g:syntastic_python_checkers = ['pylint']
+
+" golang settings
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_fmt_command = "goimports"
+let g:go_fmt_autosave = 0
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
