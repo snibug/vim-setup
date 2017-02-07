@@ -18,7 +18,6 @@ Plugin 'VundleVim/Vundle.vim'
 
 "Add your bundles here
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
 Plugin 'davidhalter/jedi-vim' " jedi
 Plugin 'elzr/vim-json'
@@ -34,12 +33,9 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tomlion/vim-solidity'
 Plugin 'tpope/vim-surround'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'wookiehangover/jshint.vim' "jshint
 
 "...All your other bundles...
@@ -73,10 +69,12 @@ map r :redraw!<CR>
 
 " tab navigation
 set showtabline=2 " always show tab line
-map <C-t> :tabnew<CR>
+map <C-t> :tabnew<CR> :Explore<CR>
 map <tab> :tabnext<CR>
 map <S-tab> :tabprevious<CR>
 map <C-w> :tabclose<CR>
+map <C-e> :Explore<CR>
+
 " line wraps
 set wrap
 set textwidth=0
@@ -162,6 +160,9 @@ map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
 map ,t :tabe <C-R>=expand("%:p:h") . "/" <CR>
 map ,s :split <C-R>=expand("%:p:h") . "/" <CR>
 
+" open explore tab when open a empty file
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | Explore | endif
+
 " plugin commands
 " =================
 
@@ -183,14 +184,6 @@ let g:yankring_history_dir='~/.vim'
 
 " bufexplorer
 map <leader>o :BufExplorer<CR>
-
-" NERDTree
-let NERDTreeChDirMode=0
-let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc$', '\.out$', '\.swp$']
-let NERDTreeShowBookmarks=1
-let NERDTreeQuitOnOpen=1
-map <C-e> :NERDTreeFind<CR>
-map <C-c> :NERDTreeClose<CR>
 
 " Fugitive
 nnoremap <leader>gs :Gstatus<CR>
@@ -268,11 +261,6 @@ endfunction
 au BufEnter,BufRead * call HighrightTabs()
 au BufEnter,BufRead *.go call CancelHighrightTabs()
 
-" airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
 " YouCompleteMe options
 let g:ycm_always_populate_location_list = 1
 let g:ycm_always_populate_location_list = 1 "default 0
@@ -285,8 +273,8 @@ let g:ycm_enable_diagnostic_highlighting = 1
 let g:ycm_enable_diagnostic_signs = 1
 let g:ycm_error_symbol = '>>'
 let g:ycm_filetype_whitelist = { '*': 1 }
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
-let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_goto_buffer_command = 'new-tab'
 let g:ycm_key_invoke_completion = '<C-Space>'
 let g:ycm_key_list_previous_completion = ['', '']
 let g:ycm_key_list_select_completion = ['', '']
@@ -320,8 +308,6 @@ highlight YcmErrorLine guibg=#3f0000
 " javascript
 let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
-let g:ycm_add_preview_to_completeopt=0
-let g:ycm_confirm_extra_conf=0
 
 " c++ options
 
