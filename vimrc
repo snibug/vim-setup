@@ -19,12 +19,14 @@ Plugin 'VundleVim/Vundle.vim'
 "Add your bundles here
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
+Plugin 'c0nk/vim-gn'
 Plugin 'davidhalter/jedi-vim' " jedi
 Plugin 'elzr/vim-json'
 Plugin 'fatih/vim-go'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'godlygeek/tabular'
 Plugin 'https://github.com/tpope/vim-fugitive'
+Plugin 'https://github.com/vim-scripts/google.vim.git'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'mileszs/ack.vim'
