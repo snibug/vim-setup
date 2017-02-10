@@ -2,5 +2,5 @@
 map <F5> <ESC>:w<CR>:make!<CR>
 map <F6> <ESC>:!./a.out<CR>
 if !filereadable("Makefile") && !filereadable("makefile")
-	set makeprg=echo\ 'g++\ -g\ %';g++\ -g\ %
+  set makeprg=echo\ 'g++\ -g\ %';g++\ -g\ %
 endif

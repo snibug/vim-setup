@@ -35,7 +35,6 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'scrooloose/syntastic'
 Plugin 'tomlion/vim-solidity'
 Plugin 'tpope/vim-surround'
 Plugin 'wookiehangover/jshint.vim' "jshint
@@ -55,9 +54,10 @@ colorscheme busybee
 hi Visual term=reverse ctermbg=8 guibg=LightGrey
 
 " tabs
-set tabstop=2
-set shiftwidth=2
 set expandtab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 
 " search settings
 set ignorecase
@@ -292,28 +292,11 @@ set completeopt-=preview
 highlight YcmErrorSign guibg=#3f0000
 highlight YcmErrorLine guibg=#3f0000
 
-" syntastic options
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
-"map <C-n> :SyntasticNext<CR>
-"map <C-p> :SyntasticPrev<CR>
-
-"let g:syntastic_always_populate_loc_list = 0
-"let g:syntastic_auto_loc_list = 0
-"let g:syntastic_check_on_open = 0
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_debug = 0
-"let g:syntastic_aggregate_errors = 0
-
 " javascript
 let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
 
 " c++ options
-
-" python options
 
 " golang options
 let g:go_highlight_functions = 1
