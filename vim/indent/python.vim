@@ -161,7 +161,7 @@ function! GetPythonIndent(lnum)
     if pline =~ '^\s*$'
         return -1
     endif
-    
+
     " If this line is explicitly joined, try to find an indentation that looks
     " good. 
     if pline =~ '\\$'
@@ -173,7 +173,7 @@ function! GetPythonIndent(lnum)
             return indent(sslnum) + &sw * 2
         endif
     endif
-    
+
     " If the previous line ended with a colon, indent relative to
     " statement start.
     if pline =~ ':\s*$'
