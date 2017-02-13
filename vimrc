@@ -65,6 +65,8 @@ set smartcase " do not ignore case when query is mixed case
 set incsearch
 set showmatch
 set hlsearch " highlight search
+set nowrap
+
 map N Nzz " move search result to mid screen
 map n nzz
 map r :redraw!<CR>
@@ -103,7 +105,7 @@ set showcmd "
 set hidden "
 set wildmenu " autocomplete
 set wildmode=list:longest,full
-set whichwrap=b,s,h,l,<,>,[,] "
+set whichwrap=b,s,h,l
 set lazyredraw " do not redraw while running macros
 set history=1000 "
 set undolevels=1000 "
@@ -261,7 +263,6 @@ au BufEnter,BufRead *.go call CancelHighrightTabs()
 
 " YouCompleteMe options
 let g:ycm_always_populate_location_list = 1
-let g:ycm_always_populate_location_list = 1 "default 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
 let g:ycm_complete_in_strings = 1 "default 1
@@ -287,6 +288,8 @@ set completeopt-=preview
 
 highlight YcmErrorSign guibg=#3f0000
 highlight YcmErrorLine guibg=#3f0000
+map <C-n> :lnext<CR>
+map <C-p> :lprevious<CR>
 
 " javascript
 let g:tern_map_keys=1
