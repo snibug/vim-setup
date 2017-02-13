@@ -20,8 +20,9 @@ for path, target in jobs:
 os.system('vim -c VundleUpdate -c quitall')
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
-ycm_dir = os.path.join(root_dir, 'vim', 'bundle', 'YouCompleteMe')
 
+# install YouCompleteMe
+ycm_dir = os.path.join(root_dir, 'vim', 'bundle', 'YouCompleteMe')
 install_command = [
     os.path.join(ycm_dir, 'install.py'),
     '--clang-completer',
@@ -29,3 +30,8 @@ install_command = [
     '--gocode-completer',
 ]
 subprocess.Popen(install_command).wait()
+
+#install tern_for_vim
+tern_dir = os.path.join(root_dir, 'vim', 'bundle', 'tern_for_vim')
+install_command = ['npm', 'install']
+subprocess.Popen(install_command, cwd=tern_dir).wait()
