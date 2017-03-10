@@ -37,7 +37,6 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tomlion/vim-solidity'
 Plugin 'tpope/vim-surround'
-Plugin 'wookiehangover/jshint.vim' "jshint
 
 "...All your other bundles...
 if iCanHazVundle == 0
