@@ -311,8 +311,8 @@ filetype plugin indent on " load filetype plugins/indent settings
 
 " autocmds
 " ========
-autocmd FileType c,cpp,js,python set expandtab
 autocmd FileType c,cpp,js,python set ts=2
 autocmd FileType c,cpp,js,python set shiftwidth=2
 autocmd FileType c,cpp,js,python set softtabstop=2
 autocmd FileType c,cpp,js,python set tabstop=2
+autocmd FileType c,cpp,js,python set expandtab
