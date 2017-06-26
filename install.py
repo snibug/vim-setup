@@ -2,6 +2,25 @@
 import glob
 import os
 import subprocess
+import sys
+
+null_device = open(os.devnull, 'w')
+
+def which(program):
+  try:
+    subprocess.check_call(program,
+                          stdout=null_device,
+                          stderr=subprocess.STDOUT)
+  except Exception as e:
+    print('program not found error. program: ' + program[0])
+    return False
+  return True
+
+if not all([
+  which(['cmake']),
+  which(['npm', '--version']),
+  which(['go', 'version'])]):
+  sys.exit()
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
 j = lambda *args: os.path.join(current_dir, *args)
