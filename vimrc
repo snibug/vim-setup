@@ -260,6 +260,9 @@ endfunction
 au BufEnter,BufRead * call HighrightTabs()
 au BufEnter,BufRead *.go call CancelHighrightTabs()
 
+" support jsx on js file
+let g:jsx_ext_required = 0
+
 " YouCompleteMe options
 let g:ycm_always_populate_location_list = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -291,8 +294,9 @@ map <C-n> :lnext<CR>
 map <C-p> :lprevious<CR>
 
 " javascript
-let g:tern_map_keys=1
-let g:tern_show_argument_hints='on_hold'
+let g:tern_map_keys=0
+"let g:tern_show_argument_hints='on_hold'
+let g:tern_show_argument_hints='no'
 
 " c++ options
 
