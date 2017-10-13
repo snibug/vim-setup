@@ -81,7 +81,6 @@ map <C-e> :Explore<CR>
 " line wraps
 set wrap
 set textwidth=0
-" autoindent
 set autoindent
 set pastetoggle=<F8>
 " save when focus is lost
@@ -307,8 +306,14 @@ let g:go_highlight_fields = 1
 let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-let g:go_fmt_command = "goimports"
-let g:go_fmt_autosave = 0
+let g:go_fmt_autosave = 1
+let g:go_asmfmt_autosave = 1
+let g:go_test_timeout = '10s'
+
+augroup auto_go
+  autocmd BufWritePost *.go :GoBuild
+  autocmd BufWritePost *_test.go :GoTest
+augroup end
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
