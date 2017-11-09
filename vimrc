@@ -37,6 +37,9 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tomlion/vim-solidity'
 Plugin 'tpope/vim-surround'
+Plugin 'google/vim-maktaba'
+Plugin 'google/vim-codefmt'
+Plugin 'google/vim-glaive'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -314,6 +317,23 @@ augroup auto_go
   autocmd BufWritePost *.go :GoBuild
   autocmd BufWritePost *_test.go :GoTest
 augroup end
+
+call glaive#Install()
+Glaive codefmt plugin[mappings]
+Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
+Glaive codefmt clang_format_style="chromium"
+
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,json AutoFormatBuffer js-beautify
+  autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+augroup END
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
