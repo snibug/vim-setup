@@ -13,6 +13,7 @@ if !filereadable(vundle_readme)
 endif
 
 set rtp+=~/.vim/bundle/vundle/
+
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
@@ -40,6 +41,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'google/vim-maktaba'
 Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
+Plugin 'Vimjas/vim-python-pep8-indent'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -302,41 +304,26 @@ let g:tern_show_argument_hints='no'
 
 " c++ options
 
-" golang options
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_fmt_autosave = 1
-let g:go_asmfmt_autosave = 1
-let g:go_test_timeout = '10s'
-
-augroup auto_go
-  autocmd BufWritePost *.go :GoBuild
-  autocmd BufWritePost *_test.go :GoTest
-augroup end
-
 call glaive#Install()
 Glaive codefmt plugin[mappings]
 Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
-Glaive codefmt clang_format_style="chromium"
+Glaive codefmt clang_format_style="google"
 
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
   autocmd FileType dart AutoFormatBuffer dartfmt
   autocmd FileType go AutoFormatBuffer gofmt
   autocmd FileType gn AutoFormatBuffer gn
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
-  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+  " autocmd FileType python AutoFormatBuffer autopep8
 augroup END
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
+
 
 " autocmds
 " ========
@@ -345,3 +332,4 @@ autocmd FileType c,cpp,js,python set shiftwidth=2
 autocmd FileType c,cpp,js,python set softtabstop=2
 autocmd FileType c,cpp,js,python set tabstop=2
 autocmd FileType c,cpp,js,python set expandtab
+
