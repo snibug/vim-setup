@@ -296,11 +296,17 @@ augroup END
 
 " autocmds
 " ========
-autocmd FileType c,cpp,js,python set ts=2
-autocmd FileType c,cpp,js,python set shiftwidth=2
-autocmd FileType c,cpp,js,python set softtabstop=2
-autocmd FileType c,cpp,js,python set tabstop=2
-autocmd FileType c,cpp,js,python set expandtab
+autocmd FileType python set ts=4
+autocmd FileType python set shiftwidth=4
+autocmd FileType python set softtabstop=4
+autocmd FileType python set tabstop=4
+autocmd FileType python set expandtab
+
+autocmd FileType c,cpp,js set ts=2
+autocmd FileType c,cpp,js set shiftwidth=2
+autocmd FileType c,cpp,js set softtabstop=2
+autocmd FileType c,cpp,js set tabstop=2
+autocmd FileType c,cpp,js set expandtab
 
 " NERD Commenter
 "
