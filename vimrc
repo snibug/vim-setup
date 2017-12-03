@@ -18,7 +18,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 "Add your bundles here
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
 Plugin 'c0nk/vim-gn'
 Plugin 'davidhalter/jedi-vim' " jedi
@@ -41,7 +40,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'google/vim-maktaba'
 Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
-Plugin 'Vimjas/vim-python-pep8-indent'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'Rip-Rip/clang_complete'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -70,6 +70,7 @@ set incsearch
 set showmatch
 set hlsearch " highlight search
 set nowrap
+set number relativenumber
 
 map N Nzz " move search result to mid screen
 map n nzz
@@ -267,33 +268,6 @@ au BufEnter,BufRead *.go call CancelHighrightTabs()
 " support jsx on js file
 let g:jsx_ext_required = 0
 
-" YouCompleteMe options
-let g:ycm_always_populate_location_list = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
-let g:ycm_complete_in_strings = 1 "default 1
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_echo_current_diagnostic = 1
-let g:ycm_enable_diagnostic_highlighting = 1
-let g:ycm_enable_diagnostic_signs = 1
-let g:ycm_error_symbol = '>>'
-let g:ycm_filetype_whitelist = { '*': 1 }
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_goto_buffer_command = 'new-tab'
-let g:ycm_key_invoke_completion = '<C-Space>'
-let g:ycm_key_list_previous_completion = ['', '']
-let g:ycm_key_list_select_completion = ['', '']
-let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
-let g:ycm_path_to_python_interpreter = '' "default ''
-let g:ycm_register_as_syntastic_checker = 1 "default 1
-let g:ycm_server_log_level = 'info' "default info
-let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
-let g:ycm_show_diagnostics_ui = 1
-let g:ycm_warning_symbol = '>*'
-set completeopt-=preview
-
-highlight YcmErrorSign guibg=#3f0000
-highlight YcmErrorLine guibg=#3f0000
 map <C-n> :lnext<CR>
 map <C-p> :lprevious<CR>
 
@@ -302,13 +276,13 @@ let g:tern_map_keys=0
 "let g:tern_show_argument_hints='on_hold'
 let g:tern_show_argument_hints='no'
 
-" c++ options
-
+" glaive setup
 call glaive#Install()
 Glaive codefmt plugin[mappings]
 Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
 Glaive codefmt clang_format_style="google"
 
+" autoformat
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
   autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
@@ -318,12 +292,7 @@ augroup autoformat_settings
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
-  " autocmd FileType python AutoFormatBuffer autopep8
 augroup END
-
-"must be last
-filetype plugin indent on " load filetype plugins/indent settings
-
 
 " autocmds
 " ========
@@ -333,3 +302,40 @@ autocmd FileType c,cpp,js,python set softtabstop=2
 autocmd FileType c,cpp,js,python set tabstop=2
 autocmd FileType c,cpp,js,python set expandtab
 
+" NERD Commenter
+"
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" customize keymapping
+map <Leader>c<space> <plug>NERDComToggleComment
+map <Leader>cc <plug>NERDComComment
+
+"clang complete
+let s:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
+if isdirectory(s:clang_library_path)
+  let g:clang_library_path=s:clang_library_path
+endif
+
+set completeopt-=preview
+
+"must be last
+filetype plugin indent on " load filetype plugins/indent settings
