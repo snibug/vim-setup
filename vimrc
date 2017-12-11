@@ -42,6 +42,7 @@ Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Rip-Rip/clang_complete'
+Plugin 'rking/ag.vim'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -282,7 +283,9 @@ Glaive codefmt plugin[mappings]
 Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
 Glaive codefmt clang_format_style="google"
 
+"
 " autoformat
+
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
   autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
@@ -294,8 +297,9 @@ augroup autoformat_settings
   autocmd FileType python AutoFormatBuffer yapf
 augroup END
 
+"
 " autocmds
-" ========
+
 autocmd FileType python set ts=4
 autocmd FileType python set shiftwidth=4
 autocmd FileType python set softtabstop=4
@@ -308,6 +312,7 @@ autocmd FileType c,cpp,js set softtabstop=2
 autocmd FileType c,cpp,js set tabstop=2
 autocmd FileType c,cpp,js set expandtab
 
+"
 " NERD Commenter
 "
 " Add spaces after comment delimiters by default
@@ -340,6 +345,17 @@ let s:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/
 if isdirectory(s:clang_library_path)
   let g:clang_library_path=s:clang_library_path
 endif
+
+
+" jedi settings
+
+let g:jedi#use_tabs_not_buffers = 1
+let g:jedi#popup_select_first = 0
+
+" ag settings
+
+let g:ag_highlight=1
+let g:ag_working_path_mode='r'
 
 set completeopt-=preview
 
