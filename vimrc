@@ -349,7 +349,7 @@ let NERDTreeIgnore = ['\.pyc$']
 map <F9> :NERDTreeToggle<CR>
 
 " golang
-au FileType go nmap <leader>d <plug>(go-def-tab)
+au FileType go nmap <leader>d :GoDef<CR>
 au FileType go nmap <leader>b :GoBuild<CR>
 au FileType go nmap <leader>t :GoTest<CR>
 
