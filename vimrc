@@ -291,7 +291,6 @@ augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
   autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
   autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
   autocmd FileType gn AutoFormatBuffer gn
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
@@ -353,6 +352,10 @@ map <F9> :NERDTreeToggle<CR>
 au FileType go nmap <leader>d <plug>(go-def-tab)
 au FileType go nmap <leader>b :GoBuild<CR>
 au FileType go nmap <leader>t :GoTest<CR>
+
+" golang gofmt and go build
+let g:go_fmt_command = "goimports"
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
 
 " Vimux
 nmap <silent> <leader>t :RunNoseTestFocused<CR>
