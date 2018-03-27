@@ -43,6 +43,9 @@ Plugin 'google/vim-glaive'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Rip-Rip/clang_complete'
 Plugin 'rking/ag.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'benmills/vimux'
+Plugin 'pitluga/vimux-nose-test'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -86,10 +89,10 @@ map <C-w> :tabclose<CR>
 map <C-e> :Explore<CR>
 
 " line wraps
-set wrap
-set textwidth=0
+set textwidth=100
 set autoindent
 set pastetoggle=<F8>
+
 " save when focus is lost
 au FocusLost * :wa
 set encoding=utf8
@@ -143,6 +146,7 @@ nmap <silent> <leader><space> :nohlsearch<cr>
 " get rid of trailing spaces
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 " source this vimrc
+" source this vimrc
 nnoremap <leader>sv :so $MYVIMRC<CR>
 " select last pasted
 nnoremap <leader>v V`]
@@ -172,10 +176,10 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | Explore | endif
 " =================
 
 " CtrlP
-set wildignore=*.pyc,*.o,*.out,*.png
-nnoremap <leader>t :CtrlP<CR>
-let g:ctrlp_map = '<leader>t'
-let g:ctrlp_working_path_mode = 0
+"set wildignore=*.pyc,*.o,*.out,*.png
+"nnoremap <leader>t :CtrlP<CR>
+"let g:ctrlp_map = '<leader>t'
+"let g:ctrlp_working_path_mode = 0
 
 " Ack
 let g:ackprg="ack-grep -H --nocolor --nogroup --column --nojs"
@@ -201,11 +205,11 @@ nnoremap <F2> :call ToggleMouse()<CR>
 nnoremap <F3> :set wrap!<CR>
 function! ToggleMouse()
   if &mouse == 'a'
-	set nonu
+    set nonu
     set mouse=
     echo "Mouse usage disabled"
   else
-	set nu
+    set nu
     set mouse=a
     echo "Mouse usage enabled"
   endif
@@ -213,15 +217,15 @@ endfunction
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy/<C-R><C-R>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
+      \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+      \gvy/<C-R><C-R>=substitute(
+      \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+      \gV:call setreg('"', old_reg, old_regtype)<CR>
 vnoremap <silent> # :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy?<C-R><C-R>=substitute(
-  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
+      \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+      \gvy?<C-R><C-R>=substitute(
+      \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+      \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 silent !stty -ixon > /dev/null 2> /dev/null
 nnoremap <C-q> :qa<CR>
@@ -273,7 +277,6 @@ map <C-n> :lnext<CR>
 map <C-p> :lprevious<CR>
 
 " javascript
-let g:tern_map_keys=0
 "let g:tern_show_argument_hints='on_hold'
 let g:tern_show_argument_hints='no'
 
@@ -283,9 +286,7 @@ Glaive codefmt plugin[mappings]
 Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
 Glaive codefmt clang_format_style="google"
 
-"
 " autoformat
-
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
   autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
@@ -297,9 +298,7 @@ augroup autoformat_settings
   autocmd FileType python AutoFormatBuffer yapf
 augroup END
 
-"
 " autocmds
-
 autocmd FileType python set ts=4
 autocmd FileType python set shiftwidth=4
 autocmd FileType python set softtabstop=4
@@ -312,35 +311,20 @@ autocmd FileType c,cpp,js set softtabstop=2
 autocmd FileType c,cpp,js set tabstop=2
 autocmd FileType c,cpp,js set expandtab
 
-"
 " NERD Commenter
-"
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
+let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
+let g:NERDCompactSexyComs = 1 " Use compact syntax for prettified multi-line comments
+let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDAltDelims_java = 1 " Set a language to use its alternate delimiters by default
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } } " Add your own custom formats or override the defaults
+let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
 
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-
-" Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
-
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-
-" customize keymapping
+" NERD customize keymapping
 map <Leader>c<space> <plug>NERDComToggleComment
 map <Leader>cc <plug>NERDComComment
 
-"clang complete
+" clang complete
 let s:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
 if isdirectory(s:clang_library_path)
   let g:clang_library_path=s:clang_library_path
@@ -348,16 +332,31 @@ endif
 
 
 " jedi settings
-
 let g:jedi#use_tabs_not_buffers = 1
 let g:jedi#popup_select_first = 0
 
 " ag settings
-
 let g:ag_highlight=1
 let g:ag_working_path_mode='r'
 
 set completeopt-=preview
+
+" change CWD when the NERDtree is first loaded to the directory initialized in
+" (e.g. change CWD to the directory hitted by CtrlPZ)
+let g:NERDTreeChDirMode = 1
+let NERDTreeIgnore = ['\.pyc$']
+
+" <Leader>N toggles NERDTree (across tab)
+map <F9> :NERDTreeToggle<CR>
+
+" golang
+au FileType go nmap <leader>d <plug>(go-def-tab)
+au FileType go nmap <leader>b :GoBuild<CR>
+au FileType go nmap <leader>t :GoTest<CR>
+
+" Vimux
+nmap <silent> <leader>t :RunNoseTestFocused<CR>
+nmap <silent> <leader>T :RunNoseTestBuffer<CR>
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
