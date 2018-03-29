@@ -18,6 +18,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 "Add your bundles here
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
 Plugin 'c0nk/vim-gn'
 Plugin 'davidhalter/jedi-vim' " jedi
@@ -43,7 +44,7 @@ Plugin 'google/vim-glaive'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Rip-Rip/clang_complete'
 Plugin 'rking/ag.vim'
-Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree'
 Plugin 'benmills/vimux'
 Plugin 'pitluga/vimux-nose-test'
 
@@ -82,11 +83,11 @@ map r :redraw!<CR>
 
 " tab navigation
 set showtabline=2 " always show tab line
-map <C-t> :tabnew<CR> :Explore<CR>
+map <S-t> :tabnew<CR> :Explore<CR>
 map <tab> :tabnext<CR>
 map <S-tab> :tabprevious<CR>
-map <C-w> :tabclose<CR>
-map <C-e> :Explore<CR>
+map <S-w> :tabclose<CR>
+map <S-e> :Explore<CR>
 
 " line wraps
 set textwidth=100
@@ -342,11 +343,11 @@ set completeopt-=preview
 
 " change CWD when the NERDtree is first loaded to the directory initialized in
 " (e.g. change CWD to the directory hitted by CtrlPZ)
-let g:NERDTreeChDirMode = 1
-let NERDTreeIgnore = ['\.pyc$']
+"let g:NERDTreeChDirMode = 1
+"let NERDTreeIgnore = ['\.pyc$']
 
 " <Leader>N toggles NERDTree (across tab)
-map <F9> :NERDTreeToggle<CR>
+"map <F9> :NERDTreeToggle<CR>
 
 " golang
 au FileType go nmap <leader>d :GoDef<CR>
