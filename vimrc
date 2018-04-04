@@ -349,6 +349,9 @@ set completeopt-=preview
 " <Leader>N toggles NERDTree (across tab)
 "map <F9> :NERDTreeToggle<CR>
 
+" c/c++
+au FileType cpp nmap <leader>d :YcmCompleter GoTo<CR>
+
 " golang
 au FileType go nmap <leader>d :GoDef<CR>
 au FileType go nmap <leader>b :GoBuild<CR>
@@ -361,6 +364,9 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
 " Vimux
 nmap <silent> <leader>t :RunNoseTestFocused<CR>
 nmap <silent> <leader>T :RunNoseTestBuffer<CR>
+
+" You Complete Me
+let g:ycm_confirm_extra_conf = 0
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
