@@ -47,6 +47,7 @@ Plugin 'rking/ag.vim'
 "Plugin 'scrooloose/nerdtree'
 Plugin 'benmills/vimux'
 Plugin 'pitluga/vimux-nose-test'
+Plugin 'janko-m/vim-test'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -358,9 +359,12 @@ au FileType go nmap <leader>t :GoTest<CR>
 let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
 
-" Vimux
-nmap <silent> <leader>t :RunNoseTestFocused<CR>
-nmap <silent> <leader>T :RunNoseTestBuffer<CR>
+" python
+au FileType python nmap <Leader>t :TestNearest<CR>
+
+" vim-test
+let test#go#runner = 'gotest'
+let test#python#runner = 'nose'
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
