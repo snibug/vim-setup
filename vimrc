@@ -47,6 +47,7 @@ Plugin 'rking/ag.vim'
 "Plugin 'scrooloose/nerdtree'
 Plugin 'benmills/vimux'
 Plugin 'pitluga/vimux-nose-test'
+Plugin 'leafgarland/typescript-vim'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -296,15 +297,10 @@ augroup autoformat_settings
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
+  autocmd FileType typescript AutoFormatBuffer clang-format
 augroup END
 
 " autocmds
-autocmd FileType python set ts=4
-autocmd FileType python set shiftwidth=4
-autocmd FileType python set softtabstop=4
-autocmd FileType python set tabstop=4
-autocmd FileType python set expandtab
-
 autocmd FileType c,cpp,js set ts=2
 autocmd FileType c,cpp,js set shiftwidth=2
 autocmd FileType c,cpp,js set softtabstop=2
