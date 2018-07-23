@@ -49,6 +49,11 @@ Plugin 'benmills/vimux'
 Plugin 'pitluga/vimux-nose-test'
 Plugin 'janko-m/vim-test'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'posva/vim-vue'
+" snippets
+Plugin 'ervandew/supertab'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -368,5 +373,17 @@ let test#python#runner = 'nose'
 " You Complete Me
 let g:ycm_confirm_extra_conf = 0
 
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" ultisnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
+
