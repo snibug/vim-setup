@@ -18,7 +18,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 "Add your bundles here
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
 Plugin 'c0nk/vim-gn'
 Plugin 'davidhalter/jedi-vim' " jedi
@@ -28,13 +28,10 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'godlygeek/tabular'
 Plugin 'https://github.com/tpope/vim-fugitive'
 Plugin 'https://github.com/vim-scripts/google.vim.git'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'marijnh/tern_for_vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'pangloss/vim-javascript'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tomlion/vim-solidity'
 Plugin 'tpope/vim-surround'
@@ -44,16 +41,23 @@ Plugin 'google/vim-glaive'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Rip-Rip/clang_complete'
 Plugin 'rking/ag.vim'
+Plugin 'w0rp/ale'
 "Plugin 'scrooloose/nerdtree'
-Plugin 'benmills/vimux'
 Plugin 'pitluga/vimux-nose-test'
 Plugin 'janko-m/vim-test'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'posva/vim-vue'
 " snippets
-Plugin 'ervandew/supertab'
-Plugin 'SirVer/ultisnips'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
+" javascript
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'benmills/vimux'
+"Plugin 'marijnh/tern_for_vim'
+Plugin 'pangloss/vim-javascript'
+" Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -286,7 +290,8 @@ map <C-p> :lprevious<CR>
 
 " javascript
 "let g:tern_show_argument_hints='on_hold'
-let g:tern_show_argument_hints='no'
+"let g:tern_show_argument_hints='no'
+let g:javascript_plugin_flow = 1
 
 " glaive setup
 call glaive#Install()
@@ -373,16 +378,12 @@ let test#python#runner = 'nose'
 " You Complete Me
 let g:ycm_confirm_extra_conf = 0
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" ultisnips
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
+" Asynchronous Lint Engine
+let b:ale_fixers = {'javascript': ['prettier', 'eslint']}
+let g:ale_completion_enabled = 1
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
