@@ -18,47 +18,40 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 "Add your bundles here
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'Rip-Rip/clang_complete'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
+Plugin 'benmills/vimux'
 Plugin 'c0nk/vim-gn'
 Plugin 'davidhalter/jedi-vim' " jedi
 Plugin 'elzr/vim-json'
 Plugin 'fatih/vim-go'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'garbas/vim-snipmate'
 Plugin 'godlygeek/tabular'
+Plugin 'google/vim-codefmt'
+Plugin 'google/vim-glaive'
+Plugin 'google/vim-maktaba'
+Plugin 'honza/vim-snippets'
 Plugin 'https://github.com/tpope/vim-fugitive'
 Plugin 'https://github.com/vim-scripts/google.vim.git'
+Plugin 'janko-m/vim-test'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'leafgarland/typescript-vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'tomlion/vim-solidity'
-Plugin 'tpope/vim-surround'
-Plugin 'google/vim-maktaba'
-Plugin 'google/vim-codefmt'
-Plugin 'google/vim-glaive'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Rip-Rip/clang_complete'
-Plugin 'rking/ag.vim'
-Plugin 'w0rp/ale'
-"Plugin 'scrooloose/nerdtree'
-Plugin 'pitluga/vimux-nose-test'
-Plugin 'janko-m/vim-test'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'posva/vim-vue'
-" snippets
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-" javascript
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'benmills/vimux'
-"Plugin 'marijnh/tern_for_vim'
 Plugin 'pangloss/vim-javascript'
-" Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plugin 'dart-lang/dart-vim-plugin'
+Plugin 'pitluga/vimux-nose-test'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'posva/vim-vue'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tomlion/vim-solidity'
+Plugin 'tomtom/tlib_vim'
+Plugin 'tpope/vim-surround'
+Plugin 'w0rp/ale'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -68,6 +61,19 @@ if iCanHazVundle == 0
 endif
 
 call vundle#end()
+
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'natebosch/dart_language_server'
+Plug 'natebosch/vim-lsc'
+call plug#end()
 
 " setting start
 syntax on
@@ -372,6 +378,10 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
 " python
 au FileType python nmap <Leader>t :TestNearest<CR>
 
+" dart
+let g:lsc_server_commands = {'dart': 'dart_language_server'}
+let g:lsc_enable_autocomplete = v:false
+
 " vim-test
 let test#go#runner = 'gotest'
 let test#python#runner = 'nose'
@@ -385,6 +395,9 @@ let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
+
+" Language Server Client
+let g:lsc_enable_autocomplete = v:false
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
