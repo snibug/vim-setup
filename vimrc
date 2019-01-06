@@ -58,6 +58,7 @@ Plugin 'benmills/vimux'
 "Plugin 'marijnh/tern_for_vim'
 Plugin 'pangloss/vim-javascript'
 " Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plugin 'dart-lang/dart-vim-plugin'
 
 "...All your other bundles...
 if iCanHazVundle == 0
