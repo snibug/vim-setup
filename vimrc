@@ -23,7 +23,6 @@ Plugin 'Rip-Rip/clang_complete'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
 Plugin 'benmills/vimux'
 Plugin 'c0nk/vim-gn'
-Plugin 'davidhalter/jedi-vim' " jedi
 Plugin 'elzr/vim-json'
 Plugin 'fatih/vim-go'
 Plugin 'flazz/vim-colorschemes'
@@ -73,6 +72,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'natebosch/dart_language_server'
 Plug 'natebosch/vim-lsc'
+Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 call plug#end()
 
 " setting start
@@ -310,7 +310,7 @@ Glaive codefmt clang_format_style="google"
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
   autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType dart AutoFormatBuffer clang-format
   autocmd FileType gn AutoFormatBuffer gn
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
@@ -319,11 +319,11 @@ augroup autoformat_settings
 augroup END
 
 " autocmds
-autocmd FileType c,cpp,js set ts=2
-autocmd FileType c,cpp,js set shiftwidth=2
-autocmd FileType c,cpp,js set softtabstop=2
-autocmd FileType c,cpp,js set tabstop=2
-autocmd FileType c,cpp,js set expandtab
+autocmd FileType c,cpp,js,python set ts=2
+autocmd FileType c,cpp,js,python set shiftwidth=2
+autocmd FileType c,cpp,js,python set softtabstop=2
+autocmd FileType c,cpp,js,python set tabstop=2
+autocmd FileType c,cpp,js,python set expandtab
 
 " NERD Commenter
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
@@ -343,11 +343,6 @@ let s:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/
 if isdirectory(s:clang_library_path)
   let g:clang_library_path=s:clang_library_path
 endif
-
-
-" jedi settings
-let g:jedi#use_tabs_not_buffers = 1
-let g:jedi#popup_select_first = 0
 
 " ag settings
 let g:ag_highlight=1
@@ -379,8 +374,14 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
 au FileType python nmap <Leader>t :TestNearest<CR>
 
 " dart
-let g:lsc_server_commands = {'dart': 'dart_language_server'}
-let g:lsc_enable_autocomplete = v:false
+let dart_corelib_highlight=v:false
+let dart_format_on_save = 1
+let dart_html_in_string=v:true
+let dart_style_guide = 2
+
+" language server client
+let lsc_enable_autocomplete = v:false
+let lsc_server_commands = {'dart': 'dart_language_server'}
 
 " vim-test
 let test#go#runner = 'gotest'
@@ -390,11 +391,14 @@ let test#python#runner = 'nose'
 let g:ycm_confirm_extra_conf = 0
 
 " Asynchronous Lint Engine
-let b:ale_fixers = {'javascript': ['prettier', 'eslint']}
+let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'vue': ['prettier', 'eslint']}
 let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
+let g:ale_linter_aliases = {'vue': ['vue', 'javascript', 'css']}
+let g:ale_linters = {'vue': ['eslint', 'vls', 'csslint', 'stylelint'], 'javascript': ['eslint']}
+let g:ale_vls_use_global = 1
 
 " Language Server Client
 let g:lsc_enable_autocomplete = v:false
