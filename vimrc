@@ -45,11 +45,13 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'pitluga/vimux-nose-test'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'posva/vim-vue'
+Plugin 'psf/black'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tomlion/vim-solidity'
 Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-surround'
+Plugin 'udalov/kotlin-vim'
 Plugin 'w0rp/ale'
 
 "...All your other bundles...
@@ -391,9 +393,10 @@ let test#python#runner = 'nose'
 let g:ycm_confirm_extra_conf = 0
 
 " Asynchronous Lint Engine
-let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'vue': ['prettier', 'eslint']}
-let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 0
 let g:ale_fix_on_save = 1
+let g:ale_fix_on_text_changed = 0
+let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'vue': ['prettier', 'eslint']}
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_linter_aliases = {'vue': ['vue', 'javascript', 'css']}
