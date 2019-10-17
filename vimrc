@@ -75,6 +75,7 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'natebosch/dart_language_server'
 Plug 'natebosch/vim-lsc'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 call plug#end()
 
 " setting start
