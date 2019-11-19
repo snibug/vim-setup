@@ -111,7 +111,6 @@ map <S-w> :tabclose<CR>
 map <S-e> :Explore<CR>
 
 " line wraps
-set textwidth=100
 set autoindent
 set pastetoggle=<F8>
 
@@ -322,10 +321,15 @@ augroup autoformat_settings
 augroup END
 
 " autocmds
-autocmd FileType c,cpp,js,python set ts=2
-autocmd FileType c,cpp,js,python set shiftwidth=2
-autocmd FileType c,cpp,js,python set softtabstop=2
-autocmd FileType c,cpp,js,python set tabstop=2
+autocmd FileType c,cpp,js set shiftwidth=2
+autocmd FileType c,cpp,js set softtabstop=2
+autocmd FileType c,cpp,js set tabstop=2
+autocmd FileType c,cpp,js set ts=2
+autocmd FileType python set shiftwidth=4
+autocmd FileType python set softtabstop=4
+autocmd FileType python set tabstop=4
+autocmd FileType python set ts=4
+
 autocmd FileType c,cpp,js,python set expandtab
 
 " NERD Commenter
@@ -406,6 +410,9 @@ let g:ale_vls_use_global = 1
 
 " Language Server Client
 let g:lsc_enable_autocomplete = v:false
+
+" YAPF config
+let g:yapf_style = "chromium"
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
