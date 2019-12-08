@@ -20,6 +20,7 @@ Plugin 'VundleVim/Vundle.vim'
 "Add your bundles here
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'Rip-Rip/clang_complete'
+Plugin 'Syntastic'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
 Plugin 'benmills/vimux'
 Plugin 'c0nk/vim-gn'
@@ -40,6 +41,7 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'nvie/vim-flake8'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pangloss/vim-javascript'
 Plugin 'pitluga/vimux-nose-test'
@@ -52,6 +54,7 @@ Plugin 'tomlion/vim-solidity'
 Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-surround'
 Plugin 'udalov/kotlin-vim'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'w0rp/ale'
 
 "...All your other bundles...
@@ -111,7 +114,7 @@ map <S-w> :tabclose<CR>
 map <S-e> :Explore<CR>
 
 " line wraps
-set autoindent
+"set autoindent
 set pastetoggle=<F8>
 
 " save when focus is lost
@@ -379,6 +382,12 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
 
 " python
 au FileType python nmap <Leader>t :TestNearest<CR>
+let g:syntastic_python_checkers = [ 'flake8' ]
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let python_highlight_all=1
 
 " dart
 let dart_corelib_highlight=v:false
@@ -416,4 +425,3 @@ let g:yapf_style = "chromium"
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
-
