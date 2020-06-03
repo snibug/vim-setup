@@ -40,6 +40,8 @@ Plugin 'jelera/vim-javascript-syntax'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'mxw/vim-jsx'
+Plugin 'natebosch/vim-lsc'
+Plugin 'natebosch/vim-lsc-dart'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nvie/vim-flake8'
 Plugin 'octol/vim-cpp-enhanced-highlight'
@@ -55,7 +57,8 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-surround'
 Plugin 'udalov/kotlin-vim'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'w0rp/ale'
+Plugin 'dense-analysis/ale'
+
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -75,8 +78,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'dart-lang/dart-vim-plugin'
-Plug 'natebosch/dart_language_server'
-Plug 'natebosch/vim-lsc'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 call plug#end()
@@ -315,7 +316,7 @@ Glaive codefmt clang_format_style="google"
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
   autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
   autocmd FileType gn AutoFormatBuffer gn
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
@@ -396,8 +397,7 @@ let dart_html_in_string=v:true
 let dart_style_guide = 2
 
 " language server client
-let lsc_enable_autocomplete = v:false
-let lsc_server_commands = {'dart': 'dart_language_server'}
+let lsc_enable_autocomplete = v:true
 
 " vim-test
 let test#go#runner = 'gotest'
@@ -414,11 +414,11 @@ let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'vue': ['prettier', 'e
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_linter_aliases = {'vue': ['vue', 'javascript', 'css']}
-let g:ale_linters = {'vue': ['eslint', 'vls', 'csslint', 'stylelint'], 'javascript': ['eslint']}
+let g:ale_linters = {'vue': ['eslint', 'vls', 'csslint', 'stylelint'], 'javascript': ['prettier', 'eslint']}
 let g:ale_vls_use_global = 1
 
 " Language Server Client
-let g:lsc_enable_autocomplete = v:false
+let g:lsc_enable_autocomplete = v:true
 
 " YAPF config
 let g:yapf_style = "chromium"
