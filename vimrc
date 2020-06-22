@@ -18,12 +18,14 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 "Add your bundles here
+Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'Rip-Rip/clang_complete'
 Plugin 'Syntastic'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
 Plugin 'benmills/vimux'
 Plugin 'c0nk/vim-gn'
+Plugin 'dense-analysis/ale'
 Plugin 'elzr/vim-json'
 Plugin 'fatih/vim-go'
 Plugin 'flazz/vim-colorschemes'
@@ -57,8 +59,6 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-surround'
 Plugin 'udalov/kotlin-vim'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'dense-analysis/ale'
-
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -79,7 +79,7 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 call plug#end()
 
 " setting start
@@ -370,7 +370,7 @@ set completeopt-=preview
 "map <F9> :NERDTreeToggle<CR>
 
 " c/c++
-au FileType cpp nmap <leader>d :YcmCompleter GoTo<CR>
+" au FileType cpp nmap <leader>d :YcmCompleter GoTo<CR>
 
 " golang
 au FileType go nmap <leader>d :GoDef<CR>
@@ -404,7 +404,7 @@ let test#go#runner = 'gotest'
 let test#python#runner = 'nose'
 
 " You Complete Me
-let g:ycm_confirm_extra_conf = 0
+" let g:ycm_confirm_extra_conf = 0
 
 " Asynchronous Lint Engine
 let g:ale_completion_enabled = 0
@@ -422,6 +422,10 @@ let g:lsc_enable_autocomplete = v:true
 
 " YAPF config
 let g:yapf_style = "chromium"
+
+let vim_markdown_preview_browser='Google Chrome'
+let vim_markdown_preview_github=1
+let vim_markdown_preview_temp_file=1
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
