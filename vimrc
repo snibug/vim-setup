@@ -59,6 +59,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-surround'
 Plugin 'udalov/kotlin-vim'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'davidhalter/jedi-vim'
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -79,7 +80,8 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Plug 'lifepillar/vim-mucomplete'
 call plug#end()
 
 " setting start
@@ -321,14 +323,15 @@ augroup autoformat_settings
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
-  autocmd FileType typescript AutoFormatBuffer clang-format
+  " autocmd FileType python AutoFormatBuffer autopep8
+  autocmd FileType typescript AutoFormatBuffer prettier
 augroup END
 
 " autocmds
-autocmd FileType c,cpp,js set shiftwidth=2
-autocmd FileType c,cpp,js set softtabstop=2
-autocmd FileType c,cpp,js set tabstop=2
-autocmd FileType c,cpp,js set ts=2
+autocmd FileType c,cpp,js,ts set shiftwidth=2
+autocmd FileType c,cpp,js,ts set softtabstop=2
+autocmd FileType c,cpp,js,ts set tabstop=2
+autocmd FileType c,cpp,js,ts set ts=2
 autocmd FileType python set shiftwidth=4
 autocmd FileType python set softtabstop=4
 autocmd FileType python set tabstop=4
@@ -383,12 +386,11 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
 
 " python
 au FileType python nmap <Leader>t :TestNearest<CR>
-let g:syntastic_python_checkers = [ 'flake8' ]
+let g:syntastic_python_checkers = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let python_highlight_all=1
 
 " dart
 let dart_corelib_highlight=v:false
@@ -410,11 +412,10 @@ let test#python#runner = 'nose'
 let g:ale_completion_enabled = 0
 let g:ale_fix_on_save = 1
 let g:ale_fix_on_text_changed = 0
-let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'vue': ['prettier', 'eslint']}
+let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'typescript': ['prettier', 'eslint'], 'python': ['yapf']}
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
-let g:ale_linter_aliases = {'vue': ['vue', 'javascript', 'css']}
-let g:ale_linters = {'vue': ['eslint', 'vls', 'csslint', 'stylelint'], 'javascript': ['prettier', 'eslint']}
+let g:ale_linters = {'typesscript': ['eslint', 'prettier'], 'javascript': ['prettier', 'eslint'], 'python': ['flake8', 'pylint']}
 let g:ale_vls_use_global = 1
 
 " Language Server Client
@@ -426,6 +427,11 @@ let g:yapf_style = "chromium"
 let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_github=1
 let vim_markdown_preview_temp_file=1
+
+" Settings for jedi
+let g:jedi#completions_enabled = 0
+
+
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
