@@ -25,6 +25,7 @@ Plugin 'Syntastic'
 Plugin 'altercation/vim-colors-solarized' "T-H-E colorscheme
 Plugin 'benmills/vimux'
 Plugin 'c0nk/vim-gn'
+Plugin 'davidhalter/jedi-vim'
 Plugin 'dense-analysis/ale'
 Plugin 'elzr/vim-json'
 Plugin 'fatih/vim-go'
@@ -35,6 +36,7 @@ Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
 Plugin 'google/vim-maktaba'
 Plugin 'honza/vim-snippets'
+Plugin 'https://github.com/nvie/vim-flake8'
 Plugin 'https://github.com/tpope/vim-fugitive'
 Plugin 'https://github.com/vim-scripts/google.vim.git'
 Plugin 'janko-m/vim-test'
@@ -45,13 +47,11 @@ Plugin 'mxw/vim-jsx'
 Plugin 'natebosch/vim-lsc'
 Plugin 'natebosch/vim-lsc-dart'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nvie/vim-flake8'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pangloss/vim-javascript'
 Plugin 'pitluga/vimux-nose-test'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'posva/vim-vue'
-Plugin 'psf/black'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tomlion/vim-solidity'
@@ -59,7 +59,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-surround'
 Plugin 'udalov/kotlin-vim'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'davidhalter/jedi-vim'
+
 
 "...All your other bundles...
 if iCanHazVundle == 0
@@ -79,7 +79,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'dart-lang/dart-vim-plugin'
-Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python'}
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 " Plug 'lifepillar/vim-mucomplete'
 call plug#end()
@@ -322,8 +322,7 @@ augroup autoformat_settings
   autocmd FileType gn AutoFormatBuffer gn
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf
-  " autocmd FileType python AutoFormatBuffer autopep8
+  autocmd FileType python AutoFormatBuffer execute yapf
   autocmd FileType typescript AutoFormatBuffer prettier
 augroup END
 
@@ -332,25 +331,12 @@ autocmd FileType c,cpp,js,ts set shiftwidth=2
 autocmd FileType c,cpp,js,ts set softtabstop=2
 autocmd FileType c,cpp,js,ts set tabstop=2
 autocmd FileType c,cpp,js,ts set ts=2
+autocmd FileType c,cpp,js,ts set expandtab
+
 autocmd FileType python set shiftwidth=4
 autocmd FileType python set softtabstop=4
 autocmd FileType python set tabstop=4
 autocmd FileType python set ts=4
-
-autocmd FileType c,cpp,js,python set expandtab
-
-" NERD Commenter
-let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
-let g:NERDCompactSexyComs = 1 " Use compact syntax for prettified multi-line comments
-let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDAltDelims_java = 1 " Set a language to use its alternate delimiters by default
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } } " Add your own custom formats or override the defaults
-let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
-
-" NERD customize keymapping
-map <Leader>c<space> <plug>NERDComToggleComment
-map <Leader>cc <plug>NERDComComment
 
 " clang complete
 let s:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
@@ -363,14 +349,6 @@ let g:ag_highlight=1
 let g:ag_working_path_mode='r'
 
 set completeopt-=preview
-
-" change CWD when the NERDtree is first loaded to the directory initialized in
-" (e.g. change CWD to the directory hitted by CtrlPZ)
-"let g:NERDTreeChDirMode = 1
-"let NERDTreeIgnore = ['\.pyc$']
-
-" <Leader>N toggles NERDTree (across tab)
-"map <F9> :NERDTreeToggle<CR>
 
 " c/c++
 " au FileType cpp nmap <leader>d :YcmCompleter GoTo<CR>
@@ -385,12 +363,14 @@ let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
 
 " python
+" in python project you should install yapf
 au FileType python nmap <Leader>t :TestNearest<CR>
-let g:syntastic_python_checkers = 1
+let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
 
 " dart
 let dart_corelib_highlight=v:false
@@ -415,14 +395,11 @@ let g:ale_fix_on_text_changed = 0
 let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'typescript': ['prettier', 'eslint'], 'python': ['yapf']}
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
-let g:ale_linters = {'typesscript': ['eslint', 'prettier'], 'javascript': ['prettier', 'eslint'], 'python': ['flake8', 'pylint']}
+let g:ale_linters = {'typesscript': ['eslint', 'prettier'], 'javascript': ['prettier', 'eslint'], 'python': ['yapf']}
 let g:ale_vls_use_global = 1
 
 " Language Server Client
 let g:lsc_enable_autocomplete = v:true
-
-" YAPF config
-let g:yapf_style = "chromium"
 
 let vim_markdown_preview_browser='Google Chrome'
 let vim_markdown_preview_github=1
@@ -430,8 +407,6 @@ let vim_markdown_preview_temp_file=1
 
 " Settings for jedi
 let g:jedi#completions_enabled = 0
-
-
 
 "must be last
 filetype plugin indent on " load filetype plugins/indent settings
