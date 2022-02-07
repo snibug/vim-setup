@@ -78,7 +78,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python'}
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-" Plug 'lifepillar/vim-mucomplete'
 call plug#end()
 
 " setting start
@@ -218,6 +217,9 @@ let g:yankring_history_dir='~/.vim'
 " bufexplorer
 map <leader>o :BufExplorer<CR>
 
+" nerd commenter
+map <leader>c<space> <plug>NERDComComment
+
 " Fugitive
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
@@ -297,14 +299,6 @@ au BufEnter,BufRead *.go call CancelHighrightTabs()
 " support jsx on js file
 let g:jsx_ext_required = 0
 
-map <C-n> :lnext<CR>
-map <C-p> :lprevious<CR>
-
-" javascript
-"let g:tern_show_argument_hints='on_hold'
-"let g:tern_show_argument_hints='no'
-let g:javascript_plugin_flow = 1
-
 " glaive setup
 call glaive#Install()
 Glaive codefmt plugin[mappings]
@@ -319,8 +313,7 @@ augroup autoformat_settings
   autocmd FileType gn AutoFormatBuffer gn
   autocmd FileType html,css,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer execute yapf
-  autocmd FileType typescript AutoFormatBuffer prettier
+  autocmd FileType python AutoFormatBuffer yapf
 augroup END
 
 " autocmds
@@ -361,13 +354,18 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
 
 " python
 " in python project you should install yapf
-au FileType python nmap <Leader>t :TestNearest<CR>
+au FileType python nmap <leader>t :TestNearest<CR>
+
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+" Javascript and Typescript
+au FileType js,ts,typescriptreact nmap <C-d> :ALEDetail<CR>
+au FileType js,ts,typescriptreact nmap <C-n> :ALENext<CR>
+au FileType js,ts,typescriptreact nmap <C-p> :ALEPrevious<CR>
 
 " dart
 let dart_corelib_highlight=v:false
@@ -382,14 +380,12 @@ let lsc_enable_autocomplete = v:true
 let test#go#runner = 'gotest'
 let test#python#runner = 'nose'
 
-" You Complete Me
-" let g:ycm_confirm_extra_conf = 0
-
 " Asynchronous Lint Engine
 let g:ale_completion_enabled = 0
 let g:ale_fix_on_save = 1
 let g:ale_fix_on_text_changed = 0
-let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'typescript': ['prettier', 'eslint'], 'python': ['yapf']}
+let g:ale_fixers = { 'javascript': ['prettier', 'eslint'], 'typescript': ['prettier', 'eslint'], 'typescriptreact': ['prettier', 'eslint'], 'python': ['yapf'] }
+
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_linters = {'typesscript': ['eslint', 'prettier'], 'javascript': ['prettier', 'eslint'], 'python': ['yapf']}
