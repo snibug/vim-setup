@@ -45,13 +45,7 @@ ycm_dir = os.path.join(root_dir, 'vim', 'bundle', 'YouCompleteMe')
 install_command = [
   os.path.join(ycm_dir, 'install.py'),
   '--clang-completer',
-  '--system-libclang',
-  '--tern-completer',
-  '--gocode-completer',
+  '--ts-completer',
+  '--verbose',
 ]
 subprocess.Popen(install_command).wait()
-
-#install tern_for_vim
-tern_dir = os.path.join(root_dir, 'vim', 'bundle', 'tern_for_vim')
-install_command = ['npm', 'install']
-subprocess.Popen(install_command, cwd=tern_dir).wait()

@@ -56,6 +56,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tpope/vim-surround'
 Plugin 'udalov/kotlin-vim'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'Valloric/YouCompleteMe'
 
 
 "...All your other bundles...
@@ -77,7 +78,6 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python'}
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 call plug#end()
 
 " setting start
@@ -308,25 +308,17 @@ Glaive codefmt clang_format_style="google"
 " autoformat
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
+  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
   autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
   autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,json AutoFormatBuffer js-beautify
+  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+  autocmd FileType rust AutoFormatBuffer rustfmt
+  autocmd FileType vue AutoFormatBuffer prettier
 augroup END
-
-" autocmds
-autocmd FileType c,cpp,js,ts set shiftwidth=2
-autocmd FileType c,cpp,js,ts set softtabstop=2
-autocmd FileType c,cpp,js,ts set tabstop=2
-autocmd FileType c,cpp,js,ts set ts=2
-autocmd FileType c,cpp,js,ts set expandtab
-
-autocmd FileType python set shiftwidth=4
-autocmd FileType python set softtabstop=4
-autocmd FileType python set tabstop=4
-autocmd FileType python set ts=4
 
 " clang complete
 let s:clang_library_path='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
