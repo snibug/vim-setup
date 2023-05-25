@@ -1,0 +1,42 @@
+{
+  "diagnostic.enable": true,
+  "diagnostic.displayByAle": true,
+  "diagnostic.errorSign": ">>",
+  "diagnostic.hintSign": "!!",
+  "diagnostic.infoSign": "ii",
+  "diagnostic.refreshOnInsertMode": false,
+  "diagnostic.virtualText": true,
+  "diagnostic.warningSign": ">",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.lintOnSave": true,
+  "python.formatting.provider": "black",
+  "python.sortImports.args": [
+    "--multi-line=3",
+    "--trailing-comma",
+    "--force-grid-wrap=0",
+    "--use-parentheses",
+    "--line-width=80"
+  ],
+  "python.jediEnabled": false,
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.useLibraryCodeForTypes": false,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.extraPaths": ["./"],
+  "python.pythonPath": "python",
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
+    }
+  },
+  "eslint.autoFixOnSave": true,
+  "eslint.run": "onSave"
+}

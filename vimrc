@@ -1,3 +1,7 @@
+"
+" 2023 copyright snibug@gmail.com
+"
+
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 
@@ -5,20 +9,24 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Syntax highlighting and indentation
+Plug 'clangd/coc-clangd'
+Plug 'dense-analysis/ale'
 Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
+Plug 'jelera/vim-javascript-syntax'
 Plug 'leafgarland/typescript-vim'
 Plug 'mxw/vim-jsx'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'pangloss/vim-javascript'
+Plug 'rust-lang/rust.vim'
 Plug 'vim-scripts/indentpython.vim'
 
 
-" Add ALE plugin
-Plug 'dense-analysis/ale'
-
 " File explorer
 Plug 'scrooloose/nerdtree'
+
+" File commant
+Plug 'preservim/nerdcommenter'
+
 
 " Status line
 Plug 'vim-airline/vim-airline'
@@ -33,8 +41,6 @@ Plug 'github/copilot.vim'
 " close-open pair
 Plug 'Raimondi/delimitMate'
 
-
-" Initialize plugin system
 call plug#end()
 
 " General settings
@@ -75,8 +81,15 @@ let g:coc_global_extensions = [
 \ 'coc-tsserver', 'coc-json', 'coc-html', 'coc-css', 'coc-pyright', 'coc-go',
 \ 'coc-eslint', 'coc-prettier', 'coc-snippets', 'coc-syntax']
 
-" Prettier settings
-autocmd FileType javascript,json,typescript,html,css,vue,python,go setlocal formatprg=prettier\ --stdin-filepath\=%
+" Automatically run Coc diagnostics on cursor hold and on InsertLeave
+nnoremap <Leader>d :CocList diagnostics<CR>
+nnoremap <Leader>n :CocNext<CR>
+nnoremap <Leader>p :CocPrev<CR>
+
+
+" Python Setting
+"
+autocmd FileType python let b:coc_root_patterns = ['.git', '.direnv']
 
 " Format on save
 autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.json,*.html,*.css,*.scss,*.md,*.py,*.go,*.c,*.cpp call CocAction('runCommand', 'editor.action.formatDocument')
@@ -92,7 +105,7 @@ inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 " Set up linting
-autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx,*.json,*.html,*.css,*.scss,*.md,*.py,*.go,*.c,*.cpp CocCommand eslint.executeAutofix
+"autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx,*.json,*.html,*.css,*.scss,*.md,*.py,*.go,*.c,*.cpp CocCommand eslint.executeAutofix
 
 
 " Enable NERDTree on startup
@@ -127,6 +140,10 @@ autocmd QuitPre * call CloseNERDTreeOnQuit()
 
 nnoremap <S-w> :NERDTreeToggle<CR>
 
+" Set nerd comment
+"
+map <leader>c<space> <plug>NERDComComment
+
 " Set Tab
 map <tab> :tabnext<CR>
 map <S-tab> :tabprevious<CR>
@@ -134,24 +151,9 @@ map <S-tab> :tabprevious<CR>
 " Set backspace
 set backspace=indent,eol,start
 
-" ALE settings
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-let g:ale_linters_explicit = 1
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_text_changed = 0
-let g:ale_lint_on_save = 1
-let g:ale_completion_enabled = 0
-
-let g:ale_linters = {
-\   'python': ['flake8'],
-\   'javascript': ['eslint', 'prettier'],
-\   'typescript': ['eslint', 'prettier'],
-\   'javascriptreact': ['eslint', 'prettier'],
-\   'typescriptreact': ['eslint', 'prettier'],
-\}
-
-" Set Copilot
+" Copilot settings
+"
+noremap <silent> <C-p> :Copilot<CR>
 
 let g:copilot_keymap = {
  \ 'complete': '<C-x><C-o>',
@@ -159,3 +161,27 @@ let g:copilot_keymap = {
  \}
 
 
+" Javascript settings
+"
+autocmd FileType javascript call JsHighlightSelf()
+function! JsHighlightSelf()
+  if !hlexists("jsSelf")
+    syn match jsSelf "\<self\>"
+    hi link jsSelf jsGlobalObjects
+  endif
+endfunction
+
+" c++settings
+"
+function! Formatonsave()
+  let l:pos = getpos(".")
+  let l:winview = winsaveview()
+  let l:formatdiff = &formatprg
+  let &formatprg = 'clang-format'
+  normal! gggqG
+  let &formatprg = l:formatdiff
+  call setpos('.', l:pos)
+  call winrestview(l:winview)
+endfunction
+
+autocmd BufWritePre *.cpp,*.hpp,*.cc,*.h call Formatonsave()

@@ -30,10 +30,10 @@ jobs = [(j("vim"), "~/.vim"), (j("vimrc"), "~/.vimrc")]
 for path, target in jobs:
   target = os.path.expanduser(target)
   if os.path.lexists(target):
-    print target, "already exists"
+    print(target, "already exists")
   else:
     os.symlink(path, target)
-    print "created", target
+    print("created", target)
 
 
 os.system('vim -c VundleUpdate -c quitall')
