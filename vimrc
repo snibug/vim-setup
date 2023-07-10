@@ -5,11 +5,7 @@
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 
-" Language Server Protocol
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 " Syntax highlighting and indentation
-Plug 'clangd/coc-clangd'
 Plug 'dense-analysis/ale'
 Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
@@ -20,13 +16,11 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'rust-lang/rust.vim'
 Plug 'vim-scripts/indentpython.vim'
 
-
 " File explorer
 Plug 'scrooloose/nerdtree'
 
 " File commant
 Plug 'preservim/nerdcommenter'
-
 
 " Status line
 Plug 'vim-airline/vim-airline'
@@ -44,6 +38,7 @@ Plug 'Raimondi/delimitMate'
 call plug#end()
 
 " General settings
+"
 set shiftwidth=2 " indentation width
 set tabstop=2 " tab width
 
@@ -54,6 +49,7 @@ set expandtab " use spaces instead of tabs
 set number " show line numbers
 
 " Hightlight
+"
 set cursorline " highlight current line
 set hlsearch " Highlight search results
 set ignorecase " Ignore case
@@ -61,51 +57,58 @@ set smartcase " Ignore case if search query is all lowercase
 set incsearch " Show search results as you type
 
 " Theme settings
+"
 colorscheme busybee
 set background=dark
 
 " highlite a trailing space
+"
 highlight TrailingWhitespace ctermbg=red guibg=red
 autocmd BufEnter,WinEnter,FileType * match TrailingWhitespace /\s\+\%#\@<!$/
 
 " highright tab space
+"
 highlight TabWhitespace ctermbg=red guibg=red
 match TabWhitespace /\t/
 
+" ALE Setting
+"
+let g:ale_completion_autoimport = 1
+let g:ale_completion_enabled = 1
+let g:ale_enabled = 1
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
+
+
+set statusline+=%#warningmsg#
+set statusline+=%{ALEGetStatusLine()}
+
+" Set linters and fixers
+let g:ale_linters = {
+\   'rust': ['analyzer'],
+\   'javascript': ['eslint'],
+\   'go': ['gopls'],
+\   'python': ['pylint', 'flake8'],
+\}
+let g:ale_fixers = {
+\   'rust': ['rustfmt'],
+\   'javascript': ['eslint'],
+\   'go': ['gopls'],
+\   'python': ['autopep8', 'yapf'],
+\}
 
 " Auto-close brackets settings
 let g:AutoPairsFlyMode = 1
 
-" coc-settings
-let g:coc_global_extensions = [
-\ 'coc-tsserver', 'coc-json', 'coc-html', 'coc-css', 'coc-pyright', 'coc-go',
-\ 'coc-eslint', 'coc-prettier', 'coc-snippets', 'coc-syntax']
-
-" Automatically run Coc diagnostics on cursor hold and on InsertLeave
-nnoremap <Leader>d :CocList diagnostics<CR>
-nnoremap <Leader>n :CocNext<CR>
-nnoremap <Leader>p :CocPrev<CR>
-
-
 " Python Setting
 "
-autocmd FileType python let b:coc_root_patterns = ['.git', '.direnv']
-
-" Format on save
-autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.json,*.html,*.css,*.scss,*.md,*.py,*.go,*.c,*.cpp call CocAction('runCommand', 'editor.action.formatDocument')
-
-" Set up code navigation
-nnoremap <silent> gd <Plug>(coc-definition)
-nnoremap <silent> gy <Plug>(coc-type-definition)
-nnoremap <silent> gi <Plug>(coc-implementation)
-nnoremap <silent> gr <Plug>(coc-references)
 
 " Set up code completion
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-
-" Set up linting
-"autocmd BufWritePost *.js,*.jsx,*.ts,*.tsx,*.json,*.html,*.css,*.scss,*.md,*.py,*.go,*.c,*.cpp CocCommand eslint.executeAutofix
 
 
 " Enable NERDTree on startup
@@ -185,3 +188,8 @@ function! Formatonsave()
 endfunction
 
 autocmd BufWritePre *.cpp,*.hpp,*.cc,*.h call Formatonsave()
+
+" Rust Setting
+"
+nmap <Leader>rr :Cargo run<CR>
+nmap <Leader>rt :Cargo test<CR>
